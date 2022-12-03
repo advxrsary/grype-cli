@@ -18,7 +18,7 @@ func main() {
 		bom      = flag.String("f", "", "image")
 		dist     = flag.String("d", "centos:07", "distro:version")
 		output   = flag.String("o", "", "output filename")
-		severity = flag.String("s", "low", "minimum severity")
+		severity = flag.String("s", "high", "minimum severity")
 		// ! requires -o flag
 		toJSON = flag.Bool("j", false, "output to json")
 		help   = flag.Bool("h", false, "help")
@@ -33,7 +33,7 @@ func main() {
 		fmt.Println("\t-f <bom> - path to bom.json")
 		fmt.Println("\t-d <distro:version> - distro and version")
 		fmt.Println("\t-o <output> - output filename (optional)")
-		fmt.Println("\t-s <severity> - minimum severity (optional, default: low)")
+		fmt.Println("\t-s <severity> - minimum severity (optional, default: high)")
 		fmt.Println("\t-j - output to json (optional, requires -o)")
 		fmt.Println("\t-h - help")
 		os.Exit(1)
