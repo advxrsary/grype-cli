@@ -16,18 +16,19 @@ func main() {
 	// if there is flag 'o' then output to file	else output to stdout
 	var (
 		bom      = flag.String("f", "", "image")
-		dist     = flag.String("d", "", "distro:version")
+		dist     = flag.String("d", "centos:07", "distro:version")
 		output   = flag.String("o", "", "output filename")
 		severity = flag.String("s", "low", "minimum severity")
 		// ! requires -o flag
 		toJSON = flag.Bool("j", false, "output to json")
 		help   = flag.Bool("h", false, "help")
 	)
-	if len(os.Args) < 3 || *help {
-		fmt.Printf("Usage:\n\t%s -f <bom> -d <distro:version> [-o <output>] [-s <severity>] [-j]\n", os.Args[0])
-		fmt.Println("Examples:\n\tJSON output:\tvuln-scanner -f bom.json -d alpine:3.12.0 -s high -o output.txt -j")
-		fmt.Println("\tTo file:\tvuln-scanner -f bom.json -d alpine:3.12.0 -o output.txt")
-		fmt.Println("\tStandard output:vuln-scanner -f bom.json -d alpine:3.12.0 -s low")
+	if len(os.Args) < 2 || *help {
+		fmt.Printf("Usage:\n\t%s -f <bom> [-d <distro:version>] [-o <output>] [-s <severity>] [-j]\n", os.Args[0])
+		fmt.Println("\tFlags in square brackets are optional")
+		fmt.Printf("Examples:\n\tJSON output:\t%s -f bom.json -d alpine:3.12.0 -s high -o output.txt -j\n", os.Args[0])
+		fmt.Printf("\tTXT file:\t%s -f bom.json -d alpine:3.12.0 -o output.txt\n", os.Args[0])
+		fmt.Printf("\tSTD output:\t%s -f bom.json -d alpine:3.12.0\n", os.Args[0])
 		fmt.Println("Flags:")
 		fmt.Println("\t-f <bom> - path to bom.json")
 		fmt.Println("\t-d <distro:version> - distro and version")
@@ -38,13 +39,11 @@ func main() {
 		os.Exit(1)
 	}
 	flag.Parse()
-	// * Declare severity level here!
 	grypeScanner, err := scanner.New(*severity, false, true)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	// * shouuld be distro:version
 	vulns, err := grypeScanner.ScanItem("sbom:"+*bom, *dist)
 	if err != nil {
 		fmt.Println(err)
