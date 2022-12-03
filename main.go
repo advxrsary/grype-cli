@@ -49,10 +49,6 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	// Output format:
-	// pkg=pkg:rpm/kernel@3.10.0-1127.el7, vuln=CVE-2017-18595, severity=High
-	// pkg=pkg:rpm/zlib@1.2.7-18.el7, vuln=CVE-2018-25032, severity=High
-	// pkg=pkg:rpm/dbus@1.10.24-14.el7_8, vuln=CVE-2019-12749, severity=High
 
 	if !*toJSON {
 		if *output != "" {
