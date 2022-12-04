@@ -1,5 +1,5 @@
 # vuln-scanner
----
+
 ### Description
 This is a command line interface tool based on the @anchore's grype. It scans SBOM file and reports the vulnerabilities found in the image. This tool has its benefits over grype. It is less resource intensive and has simple and easy to use interface.
 
