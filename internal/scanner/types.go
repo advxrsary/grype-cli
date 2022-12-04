@@ -1,9 +1,5 @@
 package scanner
 
-import "github.com/facebookincubator/nvdtools/wfn"
-
-type CPE = wfn.Attributes
-
 type Vulnerability struct {
 	PURL      string
 	ID        string

@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/anchore/grype v0.53.1
 	github.com/anchore/syft v0.62.1
-	github.com/facebookincubator/nvdtools v0.1.4
 	github.com/ryanuber/columnize v2.1.2+incompatible
 	github.com/sirupsen/logrus v1.9.0
 )
@@ -69,6 +68,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.8.0 // indirect
 	github.com/envoyproxy/go-control-plane v0.10.2-0.20220325020618-49ff273808a1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.6.2 // indirect
+	github.com/facebookincubator/nvdtools v0.1.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/fullstorydev/grpcurl v1.8.7 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.0 // indirect
