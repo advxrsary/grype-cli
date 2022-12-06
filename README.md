@@ -35,7 +35,7 @@ Flags:
 
 ### Example
 ```
-$ ./vuln-scanner -f bom.json -d alpine:3.12.0 -o output.txt
+$ ./vuln-scanner -f bom.json -d alpine:3.12.0 -c -p
 pkg=pkg:rpm/rsync@3.1.2-10.el7                         vuln=CVE-2022-29154  severity=High
 pkg=pkg:rpm/kernel@3.10.0-1127.19.1.el7                vuln=CVE-2021-4083   severity=High
 pkg=pkg:rpm/xz@5.2.2-1.el7                             vuln=CVE-2022-1271   severity=High
