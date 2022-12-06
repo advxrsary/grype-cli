@@ -23,7 +23,7 @@ Examples:
         STD output:     ./vuln-scanner -f bom.json
 Flags:
         -f  <bom>               - path to SBOM
-        -d  <distro:version>    - distro and version
+        -d  <distro:version>    - distro and version (optional, default: centos:07)
         -o  <output>            - output filename (optional)
         -s  <severity>          - minimum severity (optional, default: high)
         -c                      - columnize standard output (optional)
