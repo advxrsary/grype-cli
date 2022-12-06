@@ -2,7 +2,8 @@ package scanner
 
 import (
 	"fmt"
-	"strings"
+	"os"
+	"path/filepath"
 
 	"github.com/anchore/grype/grype"
 	"github.com/anchore/grype/grype/db"
@@ -32,11 +33,11 @@ type grypeConfig struct {
 	PURL   string             `yaml:"purl" json:"purl" mapstructure:"purl"`
 }
 
-func New(minSeverity string, onlyFixed, withoutK8s bool) (Grype, error) {
+func New(minSeverity string, onlyFixed bool) (Grype, error) {
 
 	config := db.Config{
 		ListingURL: "https://toolbox-data.anchore.io/grype/databases/listing.json",
-		DBRootDir:  "/Users/mad/Library/Caches/grype/db/",
+		DBRootDir:  filepath.Join("/tmp", "grype", "db"),
 	}
 
 	logrus.Debug("Load vulnerability database")
@@ -55,24 +56,18 @@ func New(minSeverity string, onlyFixed, withoutK8s bool) (Grype, error) {
 	}, nil
 }
 
-func (s *Grype) ScanItem(item string, dist string) ([]Vulnerability, error) {
+func (s *Grype) ScanItem(item string, dist linux.Release) ([]Vulnerability, error) {
 	packages, context, err := pkg.Provide(item, pkg.ProviderConfig{CatalogingOptions: cataloger.DefaultConfig()})
-	split := strings.Split(dist, ":")
-	d := split[0]
-	v := ""
-	if len(split) > 1 {
-		v = split[1]
-	}
 	context.Distro = &linux.Release{
-		PrettyName: d,
-		Name:       d,
-		ID:         d,
-		IDLike:     []string{d},
-		VersionID:  v,
-		Version:    v,
+		PrettyName: dist.PrettyName,
+		Name:       dist.Name,
+		ID:         dist.ID,
+		IDLike:     dist.IDLike,
+		VersionID:  dist.VersionID,
+		Version:    dist.Version,
 	}
 	if err != nil {
-		logrus.WithError(err).Error("Grype scan failed")
+		logrus.WithError(err).Error("Failed to provide package")
 		return []Vulnerability{}, err
 	}
 	matchers := matcher.NewDefaultMatchers(matcher.Config{})
@@ -105,7 +100,8 @@ func (s *Grype) buildVulnerabilities(matches match.Matches) []Vulnerability {
 	for m := range matches.Enumerate() {
 		metadata, err := s.store.GetMetadata(m.Vulnerability.ID, m.Vulnerability.Namespace)
 		if err != nil {
-			continue
+			logrus.WithError(err).Error("Failed to get vulnerability metadata")
+			os.Exit(1)
 		}
 
 		fixedIn := []string{}

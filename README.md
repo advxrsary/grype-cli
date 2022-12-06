@@ -22,12 +22,15 @@ Examples:
         TXT file:       ./vuln-scanner -f bom.json -d alpine:3.12.0 -o output.txt
         STD output:     ./vuln-scanner -f bom.json
 Flags:
-        -f <bom> - path to bom.json
-        -d <distro:version> - distro and version
-        -o <output> - output filename (optional)
-        -s <severity> - minimum severity (optional, default: high)
-        -j - output to json (optional, requires -o)
-        -h - help
+        -f  <bom>               - path to bom.json
+        -d  <distro:version>    - distro and version
+        -o  <output>            - output filename (optional)
+        -s  <severity>          - minimum severity (optional, default: high)
+        -c                      - columnize standard output (optional)
+        -of                     - only fixed (optional)
+        -j                      - output to json (optional, requires -o)
+        -p                      - dont show flag parameters (optional)
+        -h                      - help
 ```
 
 ### Example
